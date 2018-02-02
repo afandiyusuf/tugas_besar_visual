@@ -129,12 +129,51 @@ namespace WindowsFormsApplication14
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            textBox2.PasswordChar = '*';
+            textBox6.PasswordChar = '*';
+
+            string MyConnection1 = "Server=localhost;Database=visual_tugas;Uid=root;Pwd=;";
+            string Query1 = "SELECT * FROM `pengumuman`;";
+            MySqlConnection MyConn1 = new MySqlConnection(MyConnection1);
+            MySqlCommand MyCommand1 = new MySqlCommand(Query1, MyConn1);
+            MySqlDataAdapter MyAdapter1 = new MySqlDataAdapter();
+            MyAdapter1.SelectCommand = MyCommand1;
+            DataTable dTable1 = new DataTable();
+            MyAdapter1.Fill(dTable1);
+            foreach (DataRow row in dTable1.Rows)
+            {
+
+                label2.Text = (row["pengumuman"]).ToString();
+
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            string user = textBox1.Text;
+            string pass = textBox2.Text;
+            if (user == "" || pass == "")
+            {
+                MessageBox.Show("Empty Fields Detected! Please fill up all the fields");
+                return;
+            }
+            if (user == "admin" && pass == "1234")
+            {
+                MessageBox.Show("Welcome Admin!");
+                Form3 frm3 = new Form3();
+                frm3.Show();
+            }
+            else{
+                bool r = validate_login(user, pass);
+                if (r)
+                {
+                    MessageBox.Show("Login Success!");
+                    Form2 frm2 = new Form2();
+                    frm2.Show();
+                }
+                else
+                    MessageBox.Show("Incorrect Login Credentials!");
+            }
         }
     }
 }
