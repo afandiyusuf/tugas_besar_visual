@@ -66,7 +66,25 @@ namespace WindowsFormsApplication14
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+            try
+            {
+                string MyConnection2 = "Server=localhost;Database=visual_tugas;Uid=root;Pwd=;";
+                string Query = "INSERT INTO `login_table` (`username`, `password`) VALUES ('" + textBox3.Text + "','" + textBox6.Text + "')";
+                MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
+                MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
+                MySqlDataReader MyReader2;
+                MyConn2.Open();
+                MyReader2 = MyCommand2.ExecuteReader();
+                MessageBox.Show("Save Data");
+                while (MyReader2.Read())
+                {
+                }
+                MyConn2.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -111,7 +129,7 @@ namespace WindowsFormsApplication14
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
